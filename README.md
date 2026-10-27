@@ -1,68 +1,80 @@
-# **Monitor de Hardware** 
+# Monitor de Hardware
 
-Programa usado para ler e interpretar todo o sistema do seu computador, utilizando a Windows API.
-Componentes a serem lidos e dados extraídos:
+Monitor de hardware desenvolvido em C para Windows, utilizando a Windows API. O programa apresenta informações do computador em tempo real diretamente no terminal, com um painel colorido, barras de progresso e arte ASCII.
 
-1. O conceito base (lendo a memória ram)
+## Demonstração
 
-   A maneira mais fácil de começar é monitorando a memória RAM. No Windows usa-se a biblioteca nativa `<windows.h>` e uma função chamada `GlobalMemoryStatusEx`. Ela preenche uma estrutura de dados com informações detalhadas sobre a memória física e virtual do seu computador.
+![Monitor de Hardware em execução](assets/monitor-hardware.png)
 
+## Recursos
 
+- Monitoramento do uso da CPU
+- Monitoramento do uso da memória RAM
+- Memória total, usada e livre
+- Identificação da GPU
+- Uso e espaço disponível dos discos locais
+- Nome da versão do Windows
+- Usuário atual e horário
+- Tempo de atividade do computador (uptime)
+- Atualização automática a cada segundo
+- Barras visuais e cores de alerta no terminal
+- Desenho ASCII de um monitor
 
-**Código inicial:**
+## Requisitos
 
+- Windows 10 ou Windows 11
+- Visual Studio com as ferramentas de desenvolvimento em C
+- Developer Command Prompt for Visual Studio
 
-```
-#include <windows.h>
-#include <stdio.h>
+## Como compilar
 
-int main() {
-    // 1. Cria a estrutura que vai receber os dados e define o tamanho dela
-    MEMORYSTATUSEX memInfo;
-    memInfo.dwLength = sizeof(MEMORYSTATUSEX);
+Abra o **Developer Command Prompt for Visual Studio** e navegue até a pasta do projeto:
 
-    // 2. Chama a função da API do Windows
-    if (GlobalMemoryStatusEx(&memInfo)) {
-        
-        // Os valores vêm em Bytes. Vamos converter para Gigabytes (GB)
-        // 1 GB = 1024 * 1024 * 1024 bytes
-        DWORDLONG totalPhysMem = memInfo.ullTotalPhys / (1024 * 1024 * 1024);
-        DWORDLONG availPhysMem = memInfo.ullAvailPhys / (1024 * 1024 * 1024);
-        DWORDLONG physMemUsed = totalPhysMem - availPhysMem;
-
-        // 3. Exibe os resultados no terminal
-        printf("=== Monitor de Hardware ===\n\n");
-        printf("Carga da Memoria: %d %%\n", memInfo.dwMemoryLoad);
-        printf("Memoria Total:    %llu GB\n", totalPhysMem);
-        printf("Memoria em Uso:   %llu GB\n", physMemUsed);
-        printf("Memoria Livre:    %llu GB\n", availPhysMem);
-        
-    } else {
-        printf("Erro ao tentar ler as informacoes de memoria.\n");
-    }
-
-    return 0;
-}
+```cmd
+cd /d "C:\Users\luiza\Documents\Faculdade\Estudos e Projetos\Linguagem C\Monitor Hardware"
 ```
 
+Compile o programa com:
 
-2. Lendo o uso da CPU
+```cmd
+cl monitorhardware.c /Fe:monitorhardware.exe user32.lib advapi32.lib
+```
 
-   Ler a CPU em C no Windows exige um pouco mais de matemática. O processador não diz "estou em 40%". Ele te dá o tempo total que passou trabalhando e o tempo total que passou ocioso.
+## Como executar
 
-   Para implementar isso no projeto, eu vou precisar:
+Depois da compilação, execute:
 
-   -  pesquisar a função `GetSystemTimes()` da `<windows.h>` .
-   - Fazer duas leituras com um intervalo de tempo entre elas (ex: usar a função `Sleep(1000)` para pausar por 1 seg).
-   - Subtrair os tempos da segunda leitura pelos da primeira leitura para descobrir quanto tempo a CPU passou trabalhando naquele último segundo
+```cmd
+monitorhardware.exe
+```
 
+Para encerrar o monitor:
 
-3. Como evoluir esse projeto?
+```text
+Ctrl + C
+```
 
-   Depois que o básico estiver funcionando, vou transformar esse script numa ferramenta mais robusta:
+## Organização do projeto
 
-     - **Criar um loop de atualização:** colocar o código dentro de um `while(1)` . Usar comando `system("cls")` do `<stdlib.h>` no início do loop e um `Sleep(1000)` no final. Isso vai fazer com que o terminal atualize os dados em tempo real, parecendo um monitor real.
-     
-	 - **Barras de progresso em ASCII:** em vez de mostrar apenas `60%` , vou programar um laço `for` que exiba caracteres na tela para criar uma barra visual, como [█████░░░░].
-	 
-	 - **Alertas visuais:** vou adicionar regras simples (um bloco `if/else` ) para mudar a cor do texto no terminal caso o uso da memória passe de 85%, simulando um alerta de gargalo no sistema
+```text
+.
+├── monitorhardware.c
+├── assets/
+│   └── monitor-hardware.png
+└── README.md
+```
+
+Os arquivos gerados pela compilação, como `.exe`, `.obj`, `.pdb` e `.ilk`, são ignorados pelo Git e não precisam ser enviados ao repositório.
+
+## APIs utilizadas
+
+- `GetSystemTimes`: cálculo do uso da CPU
+- `GlobalMemoryStatusEx`: informações da memória RAM
+- `EnumDisplayDevicesA`: identificação da GPU
+- `GetDiskFreeSpaceExA`: informações dos discos
+- `GetTickCount64`: tempo de atividade do sistema
+- Registro do Windows: identificação da versão do sistema operacional
+
+## Licença
+
+Projeto acadêmico e experimental, desenvolvido para estudos de linguagem C e da Windows API.
