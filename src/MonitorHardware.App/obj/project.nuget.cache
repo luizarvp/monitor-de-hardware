@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "t2bKb0qKUGA=",
+  "dgSpecHash": "DOxVIxPQNOs=",
   "success": true,
   "projectFilePath": "C:\\Users\\luiza\\Documents\\Faculdade\\Estudos e Projetos\\Linguagem C\\Monitor Hardware\\src\\MonitorHardware.App\\MonitorHardware.App.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\luiza\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\10.0.10\\microsoft.netcore.app.runtime.win-x64.10.0.10.nupkg.sha512",
+    "C:\\Users\\luiza\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\10.0.10\\microsoft.windowsdesktop.app.runtime.win-x64.10.0.10.nupkg.sha512",
+    "C:\\Users\\luiza\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\10.0.10\\microsoft.aspnetcore.app.runtime.win-x64.10.0.10.nupkg.sha512"
+  ],
   "logs": []
 }

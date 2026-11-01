@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MonitorHardware.App")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c80d4447379a6fcf98616f597c67cc05e7d342e6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9e6258427e119ff9a7f19648c3a8fb01f232b32")]
 [assembly: System.Reflection.AssemblyProductAttribute("MonitorHardware.App")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MonitorHardware.App")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
